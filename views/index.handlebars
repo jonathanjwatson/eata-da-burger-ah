@@ -1,2 +1,41 @@
-<h1>This is my index</h1>
-<h3>Welcome, {{name}}</h3>
+{{> navbar}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>This is my index</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <ul>
+                {{#each burgers}}
+
+                <li>{{name}} <button class="btn btn-danger delete" data-id="{{id}}">DELETE</button></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // EVENT LISTENERS
+    $(document).ready(function () {
+        console.log("Hello world");
+        $(".delete").on("click", function(){
+            console.log("Clicked the button");
+            const idToDelete = $(this).data("id");
+            console.log(idToDelete);
+            // API CALL
+            $.ajax({
+                url: `/api/burger/${idToDelete}`,
+                method: "DELETE"
+            }).then((response) => {
+                console.log(response);
+                location.reload();
+            })
+        })
+    });
+</script>
